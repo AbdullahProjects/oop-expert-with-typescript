@@ -9,43 +9,48 @@ Consider a car. When you think about a car, you don't need to know every intrica
 In OOP, abstraction allows us to create a `Car` class that encapsulates these essential features without revealing the internal complexities. Here's a basic implementation:
 
 ```typescript
-class Car {
-  private brand: string;
-  private model: string;
-  private speed: number;
+abstract class Vehicle {
+  private speed: number = 0;
 
-  constructor(brand: string, model: string) {
-    this.brand = brand;
-    this.model = model;
-    this.speed = 0;
-  }
+  // Abstract methods (no implementation)
+  abstract accelerate(): void;
+  abstract brake(): void;
 
-  public accelerate(): void {
-    this.speed += 10;
-  }
-
-  public brake(): void {
-    this.speed -= 10;
-  }
-
-  public getSpeed(): number {
+  // Shared behavior
+  getSpeed(): number {
     return this.speed;
   }
 }
 
-// Create a car object
-const myCar: Car = new Car("Toyota", "Camry");
+class Car extends Vehicle {
+  accelerate(): void {
+    this.speed += 20; // Cars accelerate faster
+  }
 
-// Accelerate the car
-myCar.accelerate();
+  brake(): void {
+    this.speed -= 20;
+  }
+}
 
-// Get the current speed
-console.log("Current speed:", myCar.getSpeed());
+class Bike extends Vehicle {
+  accelerate(): void {
+    this.speed += 10; // Bikes accelerate slower
+  }
+
+  brake(): void {
+    this.speed -= 10;
+  }
+}
+
+// Usage
+const vehicle: Vehicle = new Car();
+
+vehicle.accelerate();
+console.log("Speed:", vehicle.getSpeed());
 ```
 
 In this example:
 
-We have a `Car` class with attributes like `make`, `model`, and `speed`.
 We define methods like `accelerate` and `brake` to manipulate the speed of the car.
 The user interacts with the car object through these methods without needing to know how they are implemented internally.
 So, in essence, abstraction allows us to think about objects at a higher level of understanding, focusing on what they do rather than how they do it.
